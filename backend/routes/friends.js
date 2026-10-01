@@ -15,7 +15,7 @@ async function loadRequest(id) {
   return request;
 }
 
-//GET /api/friends/requests -> { incoming: [...], outgoing: [...] }
+// GET /api/friends/requests -> { incoming: [...], outgoing: [...] }
 router.get("/requests", asyncHandler(async (req, res) => {
   const [incoming, outgoing] = await Promise.all([Friends.incoming(req.user._id), Friends.outgoing(req.user._id)]);
   const people = new Map(
@@ -32,25 +32,25 @@ router.get("/requests", asyncHandler(async (req, res) => {
   });
 }));
 
-//POST /api/friends/requests  { toUserId }
+// POST /api/friends/requests  { toUserId }
 router.post("/requests", asyncHandler(async (req, res) => {
   const request = await Friends.sendRequest(req.user, oid(req.body?.toUserId, "user id"));
   res.status(201).json({ success: true, message: "Friend request sent.", requestId: request._id.toString() });
 }));
 
-//POST /api/friends/requests/:id/accept
+// POST /api/friends/requests/:id/accept
 router.post("/requests/:id/accept", asyncHandler(async (req, res) => {
   await Friends.accept(await loadRequest(req.params.id), req.user._id);
   res.json({ success: true, message: "Friend request accepted." });
 }));
 
-//sDELETE /api/friends/requests/:id - decline (recipient) or cancel (sender)
+// DELETE /api/friends/requests/:id - decline (recipient) or cancel (sender)
 router.delete("/requests/:id", asyncHandler(async (req, res) => {
   await Friends.remove(await loadRequest(req.params.id), req.user._id);
   res.json({ success: true, message: "Friend request removed." });
 }));
 
-//DELETE /api/friends/:userId - unfriend
+// DELETE /api/friends/:userId - unfriend
 router.delete("/:userId", asyncHandler(async (req, res) => {
   await Friends.unfriend(req.user, oid(req.params.userId, "user id"));
   res.json({ success: true, message: "Unfriended." });

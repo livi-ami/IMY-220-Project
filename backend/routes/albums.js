@@ -15,7 +15,7 @@ async function loadAlbum(id) {
   return album;
 }
 
-//POST /api/albums
+// POST /api/albums  { name, description?, hashtags? }
 router.post("/", asyncHandler(async (req, res) => {
   const body = req.body || {};
   const album = await Albums.create({
@@ -27,7 +27,7 @@ router.post("/", asyncHandler(async (req, res) => {
   res.status(201).json({ success: true, album: await presentAlbum(album, req.user._id) });
 }));
 
-//GET /api/albums?search=term&page=1 - all albums (global)
+// GET /api/albums?search=term&page=1 - all albums (global)
 router.get("/", asyncHandler(async (req, res) => {
   const paging = parsePaging(req.query, 12);
   const search = String(req.query.search || "").trim();
@@ -35,12 +35,12 @@ router.get("/", asyncHandler(async (req, res) => {
   res.json(paged(await presentAlbums(items), total, paging));
 }));
 
-//GET /api/albums/:id - album with its posts
+// GET /api/albums/:id - album with its posts
 router.get("/:id", asyncHandler(async (req, res) => {
   res.json({ album: await presentAlbum(await loadAlbum(req.params.id), req.user._id) });
 }));
 
-//PUT /api/albums/:id  { name?, description?, hashtags? } (owner or admin)
+// PUT /api/albums/:id  { name?, description?, hashtags? } (owner or admin)
 router.put("/:id", asyncHandler(async (req, res) => {
   const album = await loadAlbum(req.params.id);
   assertOwnerOrAdmin(req.user, album.userId, "this album");
@@ -53,7 +53,7 @@ router.put("/:id", asyncHandler(async (req, res) => {
   res.json({ success: true, album: await presentAlbum(await Albums.update(album._id, changes), req.user._id) });
 }));
 
-//DELETE /api/albums/:id (owner or admin) - posts themselves are kept
+// DELETE /api/albums/:id (owner or admin) - posts themselves are kept
 router.delete("/:id", asyncHandler(async (req, res) => {
   const album = await loadAlbum(req.params.id);
   assertOwnerOrAdmin(req.user, album.userId, "this album");
@@ -61,7 +61,7 @@ router.delete("/:id", asyncHandler(async (req, res) => {
   res.json({ success: true, message: "Album deleted." });
 }));
 
-//POST /api/albums/:id/posts  { postId } - add any existing post to your album
+// POST /api/albums/:id/posts  { postId } - add any existing post to your album
 router.post("/:id/posts", asyncHandler(async (req, res) => {
   const album = await loadAlbum(req.params.id);
   assertOwnerOrAdmin(req.user, album.userId, "this album");
@@ -70,7 +70,7 @@ router.post("/:id/posts", asyncHandler(async (req, res) => {
   res.json({ success: true, album: await presentAlbum(await Albums.addPost(album._id, postId), req.user._id) });
 }));
 
-//DELETE /api/albums/:id/posts/:postId
+// DELETE /api/albums/:id/posts/:postId
 router.delete("/:id/posts/:postId", asyncHandler(async (req, res) => {
   const album = await loadAlbum(req.params.id);
   assertOwnerOrAdmin(req.user, album.userId, "this album");

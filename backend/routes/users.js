@@ -19,14 +19,14 @@ async function loadUser(id) {
   return user;
 }
 
-//GET /api/users?search=term&page=1
+// GET /api/users?search=term&page=1
 router.get("/", asyncHandler(async (req, res) => {
   const paging = parsePaging(req.query, 20);
   const { items, total } = await Users.search(String(req.query.search || "").trim(), paging);
   res.json(paged(items.map((u) => presentUser(u)), total, paging));
 }));
 
-//GET /api/users/:id - profile with counts and your relationship to them
+// GET /api/users/:id - profile with counts and your relationship to them
 router.get("/:id", asyncHandler(async (req, res) => {
   const user = await loadUser(req.params.id);
   const [postsCount, rel] = await Promise.all([Posts.count({ userId: user._id }), Friends.relationship(req.user, user._id)]);
@@ -41,7 +41,7 @@ router.get("/:id", asyncHandler(async (req, res) => {
   });
 }));
 
-//PUT /api/users/:id  { username?, bio? } + optional "avatar" file (multipart)
+// PUT /api/users/:id  { username?, bio? } + optional "avatar" file (multipart)
 router.put("/:id", uploadImage("avatar"), asyncHandler(async (req, res) => {
   const user = await loadUser(req.params.id);
   assertOwnerOrAdmin(req.user, user._id, "this profile");
@@ -58,7 +58,7 @@ router.put("/:id", uploadImage("avatar"), asyncHandler(async (req, res) => {
   res.json({ success: true, user: presentUser(updated, { self: req.user._id.equals(user._id) }) });
 }));
 
-//DELETE /api/users/:id - removes the account and everything it owns
+// DELETE /api/users/:id - removes the account and everything it owns
 router.delete("/:id", asyncHandler(async (req, res) => {
   const user = await loadUser(req.params.id);
   assertOwnerOrAdmin(req.user, user._id, "this account");
@@ -66,7 +66,7 @@ router.delete("/:id", asyncHandler(async (req, res) => {
   res.json({ success: true, message: "Account deleted." });
 }));
 
-//GET /api/users/:id/posts
+// GET /api/users/:id/posts
 router.get("/:id/posts", asyncHandler(async (req, res) => {
   const user = await loadUser(req.params.id);
   const paging = parsePaging(req.query, 12);
@@ -74,7 +74,7 @@ router.get("/:id/posts", asyncHandler(async (req, res) => {
   res.json(paged(await presentPosts(items, req.user._id), total, paging));
 }));
 
-//GET /api/users/:id/albums
+// GET /api/users/:id/albums
 router.get("/:id/albums", asyncHandler(async (req, res) => {
   const user = await loadUser(req.params.id);
   const paging = parsePaging(req.query, 12);
@@ -82,7 +82,7 @@ router.get("/:id/albums", asyncHandler(async (req, res) => {
   res.json(paged(await presentAlbums(items), total, paging));
 }));
 
-//GET /api/users/:id/friends
+// GET /api/users/:id/friends
 router.get("/:id/friends", asyncHandler(async (req, res) => {
   const user = await loadUser(req.params.id);
   const friends = await Users.findByIds(user.friends || []);

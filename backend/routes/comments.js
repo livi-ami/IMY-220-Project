@@ -15,7 +15,7 @@ async function loadComment(id) {
   return comment;
 }
 
-//PUT /api/comments/:id  { text } (author or admin)
+// PUT /api/comments/:id  { text } (author or admin)
 router.put("/:id", asyncHandler(async (req, res) => {
   const comment = await loadComment(req.params.id);
   assertOwnerOrAdmin(req.user, comment.userId, "this comment");
@@ -23,7 +23,7 @@ router.put("/:id", asyncHandler(async (req, res) => {
   res.json({ success: true, comment: await presentComment(await Comments.update(comment._id, text)) });
 }));
 
-//DELETE /api/comments/:id (author, the post's owner, or admin)
+// DELETE /api/comments/:id (author, the post's owner, or admin)
 router.delete("/:id", asyncHandler(async (req, res) => {
   const comment = await loadComment(req.params.id);
   const post = await Posts.findById(comment.postId);

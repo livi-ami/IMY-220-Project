@@ -9,7 +9,7 @@ import { presentUser, presentPosts, presentAlbums } from "../utils/presenters.js
 const router = Router();
 router.use(authenticate);
 
-//GET /api/search?q=term  (use #tag to search hashtags only)
+// GET /api/search?q=term  (use #tag to search hashtags only)
 router.get("/", asyncHandler(async (req, res) => {
   const q = String(req.query.q || "").trim().slice(0, 60);
   if (!q) return res.json({ users: [], posts: [], albums: [] });

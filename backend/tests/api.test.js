@@ -27,7 +27,7 @@ const postForm = (extra = {}, file = { buf: PNG, type: "image/png", name: "a.png
   return f;
 };
 
-let kid, mia, admin;
+let kid, mia, admin; // { token, user }
 
 before(async () => {
   const db = await connectDB(process.env.MONGO_URI, "encore_test");
@@ -103,6 +103,7 @@ test("friends: pending request accept, duplicate, decline, unfriend", async () =
   assert.equal((await api("POST", `/api/friends/requests/${incoming.body.incoming[0].id}/accept`, { token: kid.token })).status, 200);
   assert.equal((await api("GET", `/api/users/${sarah.user.id}`, { token: kid.token })).body.user.relationship, "friends");
 
+  // mia (friend of kid) sends to frank, duplicate blocked, then decline path
   const frank = await login("frank@encore.test");
   assert.equal((await api("POST", "/api/friends/requests", { token: mia.token, json: { toUserId: frank.user.id } })).status, 201);
   assert.equal((await api("POST", "/api/friends/requests", { token: mia.token, json: { toUserId: frank.user.id } })).status, 409);
@@ -150,7 +151,7 @@ test("posts: create with image, validate, edit, like, comment, report, permissio
   assert.equal((await api("PUT", `/api/comments/${c.body.comment.id}`, { token: mia.token, json: { text: "Nice shot!" } })).body.comment.edited, true);
   const comments = await api("GET", `/api/posts/${postId}/comments`, { token: kid.token });
   assert.equal(comments.body.items[0].text, "Nice shot!");
-  //post owner may remove comments on their post
+  // post owner may remove comments on their post
   assert.equal((await api("DELETE", `/api/comments/${c.body.comment.id}`, { token: kid.token })).status, 200);
   assert.equal((await api("GET", `/api/posts/${postId}`, { token: kid.token })).body.post.commentCount, 0);
 

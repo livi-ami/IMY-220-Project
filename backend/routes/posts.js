@@ -18,7 +18,7 @@ async function loadPost(id) {
   return post;
 }
 
-//POST /api/posts - multipart/form-data: image (file), caption, eventName, hashtags
+// POST /api/posts - multipart/form-data: image (file), caption, eventName, hashtags
 router.post("/", uploadImage("image"), asyncHandler(async (req, res) => {
   if (!req.file) throw new HttpError(400, "An image is required.");
   const body = req.body || {};
@@ -36,12 +36,12 @@ router.post("/", uploadImage("image"), asyncHandler(async (req, res) => {
   }
 }));
 
-//GET /api/posts/:id
+// GET /api/posts/:id
 router.get("/:id", asyncHandler(async (req, res) => {
   res.json({ post: await presentPost(await loadPost(req.params.id), req.user._id) });
 }));
 
-//PUT /api/posts/:id  { caption?, eventName?, hashtags? } (owner or admin)
+// PUT /api/posts/:id  { caption?, eventName?, hashtags? } (owner or admin)
 router.put("/:id", asyncHandler(async (req, res) => {
   const post = await loadPost(req.params.id);
   assertOwnerOrAdmin(req.user, post.userId, "this post");
@@ -54,7 +54,7 @@ router.put("/:id", asyncHandler(async (req, res) => {
   res.json({ success: true, post: await presentPost(await Posts.update(post._id, changes), req.user._id) });
 }));
 
-//DELETE /api/posts/:id (owner or admin)
+// DELETE /api/posts/:id (owner or admin)
 router.delete("/:id", asyncHandler(async (req, res) => {
   const post = await loadPost(req.params.id);
   assertOwnerOrAdmin(req.user, post.userId, "this post");
@@ -62,7 +62,7 @@ router.delete("/:id", asyncHandler(async (req, res) => {
   res.json({ success: true, message: "Post deleted." });
 }));
 
-//POST /api/posts/:id/like  and  DELETE /api/posts/:id/like
+// POST /api/posts/:id/like  and  DELETE /api/posts/:id/like
 router.post("/:id/like", asyncHandler(async (req, res) => {
   const post = await loadPost(req.params.id);
   res.json({ post: await presentPost(await Posts.like(post._id, req.user._id), req.user._id) });
@@ -72,7 +72,7 @@ router.delete("/:id/like", asyncHandler(async (req, res) => {
   res.json({ post: await presentPost(await Posts.unlike(post._id, req.user._id), req.user._id) });
 }));
 
-//GET /api/posts/:id/comments?page=1&limit=20 (newest first)
+// GET /api/posts/:id/comments?page=1&limit=20 (newest first)
 router.get("/:id/comments", asyncHandler(async (req, res) => {
   const post = await loadPost(req.params.id);
   const paging = parsePaging(req.query, 20);
@@ -80,7 +80,7 @@ router.get("/:id/comments", asyncHandler(async (req, res) => {
   res.json(paged(await presentComments(items), total, paging));
 }));
 
-//POST /api/posts/:id/comments  { text }
+// POST /api/posts/:id/comments  { text }
 router.post("/:id/comments", asyncHandler(async (req, res) => {
   const post = await loadPost(req.params.id);
   const text = cleanText(req.body?.text, { field: "Comment", max: 300, required: true });
@@ -88,7 +88,7 @@ router.post("/:id/comments", asyncHandler(async (req, res) => {
   res.status(201).json({ success: true, comment: await presentComment(comment) });
 }));
 
-//POST /api/posts/:id/report  { reasonId, details? }
+// POST /api/posts/:id/report  { reasonId, details? }
 router.post("/:id/report", asyncHandler(async (req, res) => {
   const post = await loadPost(req.params.id);
   if (post.userId.equals(req.user._id)) throw new HttpError(400, "You can't report your own post.");

@@ -47,7 +47,7 @@ export const Users = {
     const set = { ...changes };
     if (set.username) {
       set.usernameLower = set.username.toLowerCase();
-      //explicit check
+      // explicit check so we return a clean 409 whatever the database reports for duplicate keys
       if (await col().findOne({ usernameLower: set.usernameLower, _id: { $ne: id } })) {
         throw new HttpError(409, "That username is taken.");
       }
@@ -63,7 +63,7 @@ export const Users = {
   addFriend: (id, friendId) => col().updateOne({ _id: id }, { $addToSet: { friends: friendId } }),
   removeFriend: (id, friendId) => col().updateOne({ _id: id }, { $pull: { friends: friendId } }),
 
-  //deletes account and everything it owns
+  // Deletes the account and everything it owns / left behind
   async remove(user) {
     const db = getDb();
     const id = user._id;
