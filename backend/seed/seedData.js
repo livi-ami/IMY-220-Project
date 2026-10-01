@@ -5,7 +5,6 @@ const DAY = 24 * 60 * 60 * 1000;
 const daysAgo = (n) => new Date(Date.now() - n * DAY);
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
-// Generates a simple stage-lights placeholder image so seeded posts have real image data
 function makeSvg([a, b], aspect, label) {
   const [x, y] = aspect.split("/").map(Number);
   const w = 800;
@@ -31,7 +30,7 @@ const userDefs = [
   { username: "front_row_frank", email: "frank@encore.test", bio: "If I can see the sweat, it's a good seat." },
   { username: "setlist.sarah", email: "sarah@encore.test", bio: "Festival season all year round." },
 ];
-// index pairs (0-based into userDefs) that are friends
+//index pairs (0-based into userDefs) that are friends
 const friendPairs = [[0, 1], [0, 2], [0, 3], [1, 2], [2, 4], [4, 5]];
 
 const postDefs = [
@@ -81,7 +80,7 @@ export async function seedDatabase(db) {
     return insertedId;
   };
 
-  // users
+  //users
   const users = userDefs.map((u, i) => ({
     _id: new ObjectId(), username: u.username, usernameLower: u.username.toLowerCase(), email: u.email,
     passwordHash: hash, role: "user", bio: u.bio, avatarImageId: null, friends: [], createdAt: daysAgo(90 - i),
@@ -96,10 +95,10 @@ export async function seedDatabase(db) {
   });
   await db.collection("users").insertMany(users);
 
-  // pending friend request: setlist.sarah -> concertkid
+  //pending friend request: setlist.sarah -> concertkid
   await db.collection("friendRequests").insertOne({ fromId: users[5]._id, toId: users[0]._id, createdAt: daysAgo(1) });
 
-  // posts
+  //posts
   const posts = [];
   for (const p of postDefs) {
     posts.push({
@@ -112,12 +111,12 @@ export async function seedDatabase(db) {
   }
   await db.collection("posts").insertMany(posts);
 
-  // comments
+  //comments
   await db.collection("comments").insertMany(
     commentDefs.map((c) => ({ postId: posts[c.p]._id, userId: users[c.u]._id, text: c.text, createdAt: daysAgo(c.ago) }))
   );
 
-  // albums
+  //albums
   await db.collection("albums").insertMany(
     albumDefs.map((a, i) => ({
       userId: users[a.u]._id, name: a.name, description: a.description, hashtags: a.tags,
@@ -125,7 +124,7 @@ export async function seedDatabase(db) {
     }))
   );
 
-  // report reasons
+  //report reasons
   await db.collection("reportReasons").insertMany(reasonLabels.map((label) => ({ label, createdAt: new Date() })));
 
   return { users: users.length, posts: posts.length, albums: albumDefs.length };

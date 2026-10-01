@@ -43,11 +43,13 @@ export function cleanPassword(value) {
   return value;
 }
 
-// Accepts ["a","#b"], '["a","b"]' (JSON string) or "#a #b, c". Returns unique lowercase tags without "#".
+//accepts ["a","#b"], '["a","b"]' (JSON string) or "#a #b, c"
+//returns unique lowercase tags without "#"
 export function normalizeTags(input) {
   if (input == null || input === "") return [];
   let list = input;
-  if (typeof input === "string") {
+  if (typeof input === "string") 
+  {
     try {
       const parsed = JSON.parse(input);
       list = Array.isArray(parsed) ? parsed : input.split(/[\s,]+/);

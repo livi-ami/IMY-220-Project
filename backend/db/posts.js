@@ -19,7 +19,7 @@ export const Posts = {
 
   allByUser: (userId) => col().find({ userId }).toArray(),
 
-  // filter examples: {} (global), { userId: { $in: [...] } } (local), { userId } (profile)
+  //filter
   async list(filter, { skip, limit }) {
     const [items, total] = await Promise.all([
       col().find(filter).sort({ createdAt: -1, _id: -1 }).skip(skip).limit(limit).toArray(),
@@ -28,7 +28,7 @@ export const Posts = {
     return { items, total };
   },
 
-  // Matches caption / event text, or an exact hashtag when the term starts with #
+  //matches caption or event text or exact hashtag
   searchFilter(q) {
     const term = q.trim();
     if (term.startsWith("#")) return { hashtags: term.slice(1).toLowerCase() };
@@ -50,7 +50,7 @@ export const Posts = {
     return col().findOne({ _id: id });
   },
 
-  // Deletes a post and everything that hangs off it
+  //deletes a post and everything with it
   async remove(post) {
     const db = getDb();
     await Promise.all([

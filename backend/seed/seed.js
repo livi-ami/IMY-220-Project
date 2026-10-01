@@ -1,4 +1,4 @@
-// Resets the database to the sample data:  npm run seed   (or: docker exec encore-backend node seed/seed.js)
+//npm run seed to wipe and seed the database with sample data
 import "dotenv/config";
 import { connectDB, closeDB } from "../db/connection.js";
 import { wipe, seedDatabase } from "./seedData.js";

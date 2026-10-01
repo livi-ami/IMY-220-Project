@@ -26,14 +26,14 @@ export const Friends = {
     return { ...doc, _id: insertedId };
   },
 
-  // Only the recipient can accept
+  //only the recipient can accept
   async accept(request, userId) {
     if (!request.toId.equals(userId)) throw new HttpError(403, "Only the recipient can accept this request.");
     await Promise.all([Users.addFriend(request.fromId, request.toId), Users.addFriend(request.toId, request.fromId)]);
     await col().deleteOne({ _id: request._id });
   },
 
-  // Recipient declines, or sender cancels
+  //recipient declines, or sender cancels
   async remove(request, userId) {
     if (!request.toId.equals(userId) && !request.fromId.equals(userId)) {
       throw new HttpError(403, "You can't modify this request.");
@@ -46,7 +46,7 @@ export const Friends = {
     await Promise.all([Users.removeFriend(user._id, otherId), Users.removeFriend(otherId, user._id)]);
   },
 
-  // How the viewer relates to another user: self | friends | request_sent | request_received | none
+  //how the viewer relates to another user
   async relationship(viewer, otherId) {
     if (viewer._id.equals(otherId)) return { status: "self" };
     if ((viewer.friends || []).some((f) => f.equals(otherId))) return { status: "friends" };
