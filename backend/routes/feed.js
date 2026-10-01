@@ -8,14 +8,14 @@ import { presentPosts } from "../utils/presenters.js";
 const router = Router();
 router.use(authenticate);
 
-// GET /api/feed/global?page=1&limit=12 - everyone's posts, newest first
+//GET /api/feed/global?page=1&limit=12 - everyone's posts, newest first
 router.get("/global", asyncHandler(async (req, res) => {
   const paging = parsePaging(req.query);
   const { items, total } = await Posts.list({}, paging);
   res.json(paged(await presentPosts(items, req.user._id), total, paging));
 }));
 
-// GET /api/feed/local - you and your friends
+//GET /api/feed/local - you and your friends
 router.get("/local", asyncHandler(async (req, res) => {
   const paging = parsePaging(req.query);
   const ids = [req.user._id, ...(req.user.friends || [])];

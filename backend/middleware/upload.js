@@ -10,7 +10,6 @@ const upload = multer({
     ALLOWED.includes(file.mimetype) ? cb(null, true) : cb(new HttpError(400, "Only JPG, PNG, WEBP or GIF images are allowed.")),
 });
 
-// Parses a multipart form with one optional image field into req.file (+ text fields into req.body)
 export const uploadImage = (field = "image") => (req, res, next) =>
   upload.single(field)(req, res, (err) => {
     if (!err) return next();

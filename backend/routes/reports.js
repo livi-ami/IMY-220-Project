@@ -9,18 +9,18 @@ router.use(authenticate);
 
 const presentReason = (r) => ({ id: r._id.toString(), label: r.label });
 
-// GET /api/report-reasons - the choices shown in the "report post" form
+//GET /api/report-reasons - the choices shown in the "report post" form
 router.get("/report-reasons", asyncHandler(async (req, res) => {
   res.json({ items: (await ReportReasons.list()).map(presentReason) });
 }));
 
-// POST /api/report-reasons  { label } (admin)
+//POST /api/report-reasons  { label } (admin)
 router.post("/report-reasons", requireAdmin, asyncHandler(async (req, res) => {
   const label = cleanText(req.body?.label, { field: "Reason", max: 60, required: true });
   res.status(201).json({ success: true, reason: presentReason(await ReportReasons.create(label)) });
 }));
 
-// GET /api/reports (admin) - all reports, newest first
+//GET /api/reports (admin) - all reports, newest first
 router.get("/reports", requireAdmin, asyncHandler(async (req, res) => {
   const reports = await Reports.list();
   res.json({

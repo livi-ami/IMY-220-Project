@@ -1,5 +1,3 @@
-// Turn raw Mongo documents into the JSON the frontend receives:
-// ids become strings called "id", passwords/emails are never leaked, authors are attached.
 import { ObjectId } from "mongodb";
 import { Users } from "../db/users.js";
 import { Posts } from "../db/posts.js";
@@ -57,7 +55,7 @@ export async function presentComments(comments) {
 }
 export const presentComment = async (c) => (await presentComments([c]))[0];
 
-// Album summaries (lists). Cover image = first post in the album.
+//album summaries + Cover image = first post in the album.
 export async function presentAlbums(albums) {
   const authors = await authorMap(albums.map((a) => a.userId));
   const firstIds = albums.map((a) => a.postIds[0]).filter(Boolean);
@@ -75,7 +73,7 @@ export async function presentAlbums(albums) {
   }));
 }
 
-// One album with its posts included
+//album with its posts included
 export async function presentAlbum(album, viewerId) {
   const [summary] = await presentAlbums([album]);
   const found = await Posts.findByIds(album.postIds);

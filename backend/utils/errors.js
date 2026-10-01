@@ -1,4 +1,4 @@
-// An error that carries an HTTP status code. Thrown anywhere, caught by the error middleware.
+//error that carries an HTTP status code - caught in middeware and sent to client as JSON
 export class HttpError extends Error {
   constructor(status, message, details) {
     super(message);
@@ -7,5 +7,5 @@ export class HttpError extends Error {
   }
 }
 
-// Lets async route handlers throw without try/catch in every route
+//lets async route handlers throw errors and pass them to the error-handling middleware
 export const asyncHandler = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);

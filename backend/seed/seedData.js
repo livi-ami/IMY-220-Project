@@ -5,7 +5,6 @@ const DAY = 24 * 60 * 60 * 1000;
 const daysAgo = (n) => new Date(Date.now() - n * DAY);
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
-// Generates a simple stage-lights placeholder image so seeded posts have real image data
 function makeSvg([a, b], aspect, label) {
   const [x, y] = aspect.split("/").map(Number);
   const w = 800;

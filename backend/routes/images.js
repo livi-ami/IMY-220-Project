@@ -5,7 +5,7 @@ import { oid } from "../utils/validate.js";
 
 const router = Router();
 
-// GET /api/images/:id - public so <img src="..."> works without an auth header
+//GET /api/images/:id - public so <img src="..."> works without an auth header
 router.get("/:id", asyncHandler(async (req, res) => {
   const image = await Images.findById(oid(req.params.id, "image id"));
   if (!image) throw new HttpError(404, "Image not found.");
