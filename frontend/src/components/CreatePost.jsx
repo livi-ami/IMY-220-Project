@@ -3,7 +3,7 @@ import FormField from "./FormField.jsx";
 import useForm from "../hooks/useForm.js";
 import { validatePost } from "../utils/validators.js";
 
-// Form for adding a post. Nothing is saved yet (backend comes later); onCreated receives the values.
+//form for adding a post - backend coming
 export default function CreatePost({ onCreated }) {
   const { values, errors, touched, valid, handleChange, handleBlur, reset } = useForm(
     { image: null, caption: "", event: "", tags: "" },
@@ -14,7 +14,8 @@ export default function CreatePost({ onCreated }) {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    if (!values.image || !values.image.type.startsWith("image/")) {
+    if (!values.image || !values.image.type.startsWith("image/")) \
+    {
       setPreview(null);
       return;
     }
@@ -28,7 +29,7 @@ export default function CreatePost({ onCreated }) {
     if (!valid) return;
     onCreated?.(values);
     reset();
-    setFormKey((k) => k + 1); // remounts the form so the file input clears
+    setFormKey((k) => k + 1);
     setDone(true);
   };
 

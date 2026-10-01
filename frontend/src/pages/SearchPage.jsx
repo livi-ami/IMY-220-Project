@@ -4,7 +4,7 @@ import ProfilePreview from "../components/ProfilePreview.jsx";
 import Feed from "../components/Feed.jsx";
 import { users, posts } from "../data/dummyData.js";
 
-// Basic client-side search over the dummy data (real search comes with the backend)
+//client-side search w/ dummy data
 export default function SearchPage() {
   const [params] = useSearchParams();
   const navigate = useNavigate();

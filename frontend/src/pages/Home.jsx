@@ -6,7 +6,6 @@ import { posts, currentUser } from "../data/dummyData.js";
 export default function Home() {
   const [tab, setTab] = useState("local");
 
-  // Local = you and your friends; Global = everyone
   const shown =
     tab === "local"
       ? posts.filter((p) => p.userId === currentUser.id || currentUser.friends.includes(p.userId))

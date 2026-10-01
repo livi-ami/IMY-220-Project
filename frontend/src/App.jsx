@@ -9,7 +9,6 @@ import Post from "./pages/Post.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import { currentUser } from "./data/dummyData.js";
 
-// Every page except the splash page shows the header
 function Layout() {
   return (
     <>

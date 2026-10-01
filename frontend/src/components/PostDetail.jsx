@@ -4,7 +4,7 @@ import Avatar from "./Avatar.jsx";
 import Comments from "./Comments.jsx";
 import { getUser, getComments, currentUser } from "../data/dummyData.js";
 
-// Everything about a single post: image, author, caption, tags, event, comments
+//image, author, caption, tags, event, comments
 export default function PostDetail({ post, onEdit }) {
   const author = getUser(post.userId);
   const isOwner = author.id === currentUser.id;

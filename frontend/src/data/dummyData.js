@@ -1,15 +1,15 @@
 // Dummy data used until the backend + database exist (Deliverables 2 & 3).
 
 export const users = [
-  { id: "1", username: "concertkid", bio: "Front barrier or nothing. Collecting setlists since 2019.", color: "#e83e9e", banner: ["#e83e9e", "#3b1a5c"], followers: 128, following: 94, friends: ["2", "3", "4"] },
-  { id: "2", username: "engene_lens", bio: "Enhypen fancams and fan-eye views from every tour stop.", color: "#40e0c5", banner: ["#40e0c5", "#0f4b57"], followers: 842, following: 120, friends: ["1", "3"] },
-  { id: "3", username: "livia.lens", bio: "GUTS tour, section 112. Yes, I cried.", color: "#ffb236", banner: ["#ffb236", "#7a3b0c"], followers: 311, following: 201, friends: ["1", "2", "5"] },
-  { id: "4", username: "moshpit_mia", bio: "Loud shows, louder friends.", color: "#8b7cf6", banner: ["#8b7cf6", "#1c1a4a"], followers: 97, following: 150, friends: ["1"] },
-  { id: "5", username: "front_row_frank", bio: "If I can see the sweat, it's a good seat.", color: "#f0578a", banner: ["#f0578a", "#2a1030"], followers: 560, following: 75, friends: ["3", "6"] },
-  { id: "6", username: "setlist.sarah", bio: "Festival season all year round.", color: "#5cc8ff", banner: ["#5cc8ff", "#0f2b4d"], followers: 204, following: 188, friends: ["5"] },
+  { id: "1", username: "livi._ami", bio: "Rocker and Lune.", color: "#e83e9e", banner: ["#e83e9e", "#3b1a5c"], followers: 128, following: 94, friends: ["2", "3", "4"] },
+  { id: "2", username: "maki06", bio: "#streamBackToLife", color: "#40e0c5", banner: ["#40e0c5", "#0f4b57"], followers: 842, following: 120, friends: ["1", "3"] },
+  { id: "3", username: "ljules.pret", bio: "(Taylor's Version) | Jungwon's wife", color: "#ffb236", banner: ["#ffb236", "#7a3b0c"], followers: 311, following: 201, friends: ["1", "2", "5"] },
+  { id: "4", username: "marnis_a", bio: "Loud shows, louder friends.", color: "#8b7cf6", banner: ["#8b7cf6", "#1c1a4a"], followers: 97, following: 150, friends: ["1"] },
+  { id: "5", username: "wenoism", bio: "Orange lover", color: "#f0578a", banner: ["#f0578a", "#2a1030"], followers: 560, following: 75, friends: ["3", "6"] },
+  { id: "6", username: "engene27", bio: "Enhypen fancams and fan-eye views from every tour stop", color: "#5cc8ff", banner: ["#5cc8ff", "#0f2b4d"], followers: 204, following: 188, friends: ["5"] },
 ];
 
-// Pretend this is the logged-in user (real auth comes later)
+//pretend this is the logged-in user (real auth comes later)
 export const currentUser = users[0];
 
 export const posts = [
@@ -35,7 +35,7 @@ export const comments = {
   ],
   2: [
     { id: 6, userId: "2", text: "Confetti timing is perfect." },
-    { id: 7, userId: "1", text: "Section 112 gang!" },
+    { id: 7, userId: "1", text: "Front standing gang!" },
   ],
 };
 

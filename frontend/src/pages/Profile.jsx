@@ -10,12 +10,12 @@ import { users, currentUser, getUser, getUserPosts } from "../data/dummyData.js"
 
 export default function Profile() {
   const { id } = useParams();
-  // Any id works for now: unknown ids fall back to a sample profile
+  //unknown ids fall back to a sample profile
   const base = getUser(id) || users[1];
 
   const [overrides, setOverrides] = useState({});
   const [tab, setTab] = useState("posts");
-  const [panel, setPanel] = useState(null); // "edit" | "create" | null
+  const [panel, setPanel] = useState(null);
   const [isFriend, setIsFriend] = useState(currentUser.friends.includes(base.id));
 
   useEffect(() => {

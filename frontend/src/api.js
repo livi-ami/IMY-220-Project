@@ -1,4 +1,4 @@
-// Talks to the Express backend. Auth endpoints are stubbed for now.
+//talks to the Express backend
 const BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 async function post(path, body) {

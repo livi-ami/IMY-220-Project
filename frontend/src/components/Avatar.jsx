@@ -1,6 +1,6 @@
-// Circle avatar: shows the user's image, or a coloured initial if there isn't one.
 export default function Avatar({ user, size = 40 }) {
-  if (user?.avatar) {
+  if (user?.avatar) 
+  {
     return (
       <img className="avatar" style={{ width: size, height: size }} src={user.avatar} alt={`${user.username}'s avatar`} />
     );

@@ -11,7 +11,8 @@ export default function useForm(initialValues, validate) {
   const handleChange = (e) => {
     const { name, type, value, files } = e.target;
     setValues((v) => ({ ...v, [name]: type === "file" ? files[0] || null : value }));
-    if (type === "file") setTouched((t) => ({ ...t, [name]: true }));
+    if (type === "file") 
+      setTouched((t) => ({ ...t, [name]: true }));
   };
 
   const handleBlur = (e) => setTouched((t) => ({ ...t, [e.target.name]: true }));

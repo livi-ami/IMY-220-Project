@@ -4,7 +4,6 @@ import SearchInput from "./SearchInput.jsx";
 import Avatar from "./Avatar.jsx";
 import { currentUser } from "../data/dummyData.js";
 
-// Navigation shown on every page except the splash page
 export default function Header() {
   const navigate = useNavigate();
 

@@ -7,7 +7,7 @@ import { posts, getPost } from "../data/dummyData.js";
 export default function Post() {
   const { id } = useParams();
   const navigate = useNavigate();
-  // Any id works for now: unknown ids fall back to the first post
+  //unknown ids fall back to the first post
   const [post, setPost] = useState(getPost(id) || posts[0]);
   const [editing, setEditing] = useState(false);
 

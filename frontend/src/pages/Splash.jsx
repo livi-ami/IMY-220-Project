@@ -9,9 +9,9 @@ import SignupForm from "../components/SignupForm.jsx";
 export default function Splash({ initialTab }) {
   const [tab, setTab] = useState(initialTab || "login");
 
-  // Visiting /login or /signup jumps straight to the form
   useEffect(() => {
-    if (initialTab) {
+    if (initialTab) 
+    {
       setTab(initialTab);
       document.getElementById("join")?.scrollIntoView({ behavior: "smooth" });
     }

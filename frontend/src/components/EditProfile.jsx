@@ -15,7 +15,6 @@ export default function EditProfile({ user, onSave, onCancel }) {
     if (!values.avatar) return;
     const url = URL.createObjectURL(values.avatar);
     setAvatarUrl(url);
-    // not revoked here: the URL is handed to the profile on save
   }, [values.avatar]);
 
   const handleSubmit = (e) => {
